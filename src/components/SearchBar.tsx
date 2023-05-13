@@ -3,7 +3,7 @@ const SearchBar = () => {
     <div className="flex flex-row	rounded-full bg-bgRowColor py-2 px-4">
       <img src="src\assets\search\search.svg" alt="Search Logo" />
       <input
-        className="w-80 bg-transparent"
+        className="w-80 bg-transparent px-3 outline-none	"
         type="text"
         id="text-input"
         name="text-input"

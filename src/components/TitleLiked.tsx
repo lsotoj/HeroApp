@@ -7,7 +7,7 @@ const TitleLiked = () => {
           src="src\assets\medium-heart\medium-heart.svg"
           alt="Medium filled heart"
         />
-        <span className="text-3xl ml-2">Liked</span>
+        <span className="text-3xl ml-2 font-semibold">Liked</span>
       </div>
       <img
         className="cursor-pointer bg-bgRowColor rounded-full w-10 h-10"
