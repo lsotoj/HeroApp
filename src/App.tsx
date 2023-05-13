@@ -1,8 +1,16 @@
+import LogoHeros from "./components/LogoHeros";
+import Search from "./components/Search";
+import General from "./screens/General/Index";
+import Liked from "./screens/Liked";
+
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline text-red-600">
-      Simple React Typescript Tailwind Sample
-    </h1>
+    <div className="w-full h-full bg-bgStartrack text-white pt-4 px-16 pb-6">
+      <LogoHeros />
+      <Liked />
+      <Search />
+      <General />
+    </div>
   );
 }
 

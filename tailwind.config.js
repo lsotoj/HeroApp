@@ -4,7 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bgStartrack: "#E5E5E5",
+        bgStartrack: "#11072F",
+        borderLiked: "#6A4DBC",
+        likedHeartColor: "#6A4DBC",
+        bgRowColor: "#281E42",
       },
     },
   },
