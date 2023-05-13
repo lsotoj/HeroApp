@@ -8,6 +8,7 @@ export default {
         borderLiked: "#6A4DBC",
         likedHeartColor: "#6A4DBC",
         bgRowColor: "#281E42",
+        bgCard: "#362C6A",
       },
     },
   },
