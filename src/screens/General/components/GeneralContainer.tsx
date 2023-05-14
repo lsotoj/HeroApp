@@ -2,17 +2,27 @@ import { useContext, useEffect } from "react";
 import { useFetch } from "../../../Hooks/useFetch";
 import HeroCard from "../../../components/HeroCard";
 
-import { herosType } from "../../../types/herosType";
-import { HeroContext } from "../../../context/HeroContext";
+import { heroType, herosType } from "../../../types/herosType";
+import { HerosContext } from "../../../context/HerosContext";
 const URL = "https://akabab.github.io/superhero-api/api/all.json";
 
 const GeneralContainer = () => {
   const { state, data } = useFetch<herosType[]>(URL);
-  const { heroState, loadHeros } = useContext(HeroContext);
+  const { herosState, loadHeros } = useContext(HerosContext);
 
   useEffect(() => {
-    loadHeros(data as herosType[]);
+    let favoriteAddedData = data?.map((element: herosType) => {
+      if (element.id < 6) {
+        let newObj: heroType = { ...element, favorite: true };
+        return newObj;
+      }
+      let newObj: heroType = { ...element, favorite: false };
+      return newObj;
+    });
+    loadHeros(favoriteAddedData as heroType[]);
+    console.log("favorited==>", favoriteAddedData);
   }, []);
+  console.log("HerosState=>", herosState);
 
   if (state === "loading" || state === "idle") {
     return <div>Loading</div>;

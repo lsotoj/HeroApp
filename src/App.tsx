@@ -3,17 +3,17 @@ import Search from "./components/Search/Search";
 import General from "./screens/General";
 import Liked from "./screens/Liked";
 
-import { HeroContext, HeroProvider } from "./context/HeroContext";
+import HerosProvider from "./context/HerosProvider";
 
 function App() {
   return (
     <div className="w-full h-screen bg-bgStartrack text-white pt-4 px-16 pb-6">
-      <HeroProvider>
-        <LogoHeros />
+      <LogoHeros />
+      <HerosProvider>
         <Liked />
         <Search />
         <General />
-      </HeroProvider>
+      </HerosProvider>
     </div>
   );
 }
