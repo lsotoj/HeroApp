@@ -42,3 +42,13 @@ export type herosType = {
     base: string;
   };
 };
+
+export type HeroAction =
+  | { type: "addHero"; payload: herosType }
+  | { type: "deleteHero"; payload: { id: number } }
+  | { type: "loadHeros"; payload: { data: herosType[] } };
+
+export type HerosContextProps = {
+  heroState: herosType[];
+  loadHeros: (heros: herosType[]) => void;
+};

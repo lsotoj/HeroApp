@@ -1,18 +1,22 @@
+import { useContext, useEffect } from "react";
 import { useFetch } from "../../../Hooks/useFetch";
-import { useState } from "react";
 import HeroCard from "../../../components/HeroCard";
 
 import { herosType } from "../../../types/herosType";
-
+import { HeroContext } from "../../../context/HeroContext";
 const URL = "https://akabab.github.io/superhero-api/api/all.json";
 
 const GeneralContainer = () => {
-  const { state, data, error } = useFetch<herosType[]>(URL);
+  const { state, data } = useFetch<herosType[]>(URL);
+  const { heroState, loadHeros } = useContext(HeroContext);
+
+  useEffect(() => {
+    loadHeros(data as herosType[]);
+  }, []);
 
   if (state === "loading" || state === "idle") {
     return <div>Loading</div>;
   }
-
   if (state === "error" || !data) {
     return <div>Error</div>;
   }
