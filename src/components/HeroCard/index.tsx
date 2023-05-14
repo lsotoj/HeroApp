@@ -1,10 +1,24 @@
-const HeroCard = () => {
+import { herosType } from "../../types/herosType";
+
+const HeroCard = (data: herosType) => {
+  const powerstatsValues = Object.values(data.powerstats);
+  const score = Math.trunc(
+    powerstatsValues.reduce((acc, current) => acc + current, 0) /
+      powerstatsValues.length
+  );
+
   return (
-    <div className=" cursor-pointer w-96 h-64 bg-black  rounded-lg flex p-6">
-      <div className="relative">
+    <div
+      className=" cursor-pointer w-80 h-48  rounded-lg flex p-4 bg-bgRowColor"
+      // style={{
+      //   backgroundImage:
+      //     "url('https://images.pexels.com/photos/4061662/pexels-photo-4061662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
+      // }}
+    >
+      <div className="relative w-1/2">
         <img
           className="w-full h-full object-cover rounded-lg"
-          src="https://images.pexels.com/photos/4061662/pexels-photo-4061662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={data.images.sm}
           alt="Hero Image"
         />
         <img
@@ -13,11 +27,11 @@ const HeroCard = () => {
           alt="Medium filled heart"
         />
       </div>
-      <div className="p-3">
-        <p className="text-2xl font-bold">A-Bomb</p>
-        <p className="font-light">Real Name: Richard Milhouse Jones</p>
+      <div className="pl-3">
+        <p className="text-2xl font-bold">{data.name}</p>
+        <p className="font-light">{`Real Name: ${data.biography.fullName}`}</p>
         <div>
-          <span className="text-lg font-semibold">8.4</span>
+          <span className="text-lg font-semibold">{score}</span>
           <span className=" font-light"> / 10</span>
         </div>
       </div>

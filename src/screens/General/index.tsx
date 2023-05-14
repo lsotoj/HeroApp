@@ -1,9 +1,9 @@
-import HeroCard from "../../components/HeroCard";
+import GeneralContainer from "./components/GeneralContainer";
 
 const General = () => {
   return (
-    <div className="h-1/3">
-      <HeroCard />
+    <div className="flex flex-col items-center mt-20">
+      <GeneralContainer />
     </div>
   );
 };
