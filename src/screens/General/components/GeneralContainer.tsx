@@ -20,9 +20,7 @@ const GeneralContainer = () => {
       return newObj;
     });
     loadHeros(favoriteAddedData as heroType[]);
-    console.log("favorited==>", favoriteAddedData);
   }, []);
-  console.log("HerosState=>", herosState);
 
   if (state === "loading" || state === "idle") {
     return <div>Loading</div>;
@@ -32,7 +30,7 @@ const GeneralContainer = () => {
   }
 
   return (
-    <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg max-h-screen-lg">
+    <div className="flex">
       {data?.map((hero: herosType) => (
         <HeroCard key={hero.id} {...hero} />
       ))}

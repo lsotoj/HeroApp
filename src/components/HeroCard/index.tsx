@@ -9,7 +9,7 @@ const HeroCard = (data: herosType) => {
 
   return (
     <div
-      className=" cursor-pointer w-80 h-48  rounded-lg flex p-4 bg-bgRowColor"
+      className=" cursor-pointer w-80 h-48  rounded-lg flex p-4 bg-bgRowColor m-3"
       // style={{
       //   backgroundImage:
       //     "url('https://images.pexels.com/photos/4061662/pexels-photo-4061662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
