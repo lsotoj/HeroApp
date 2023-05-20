@@ -6,6 +6,7 @@ import Liked from "./screens/Liked";
 import { herosType } from "./types/herosType";
 
 const URL = "https://akabab.github.io/superhero-api/api/all.json";
+
 function App() {
     const [heros, setHeros] = useState<herosType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,6 +42,16 @@ function App() {
             case "add":
                 setFavoritesId([...favoritesId, id]);
                 break;
+            case "delete":
+                const newFavoritesId = favoritesId.filter(
+                    (favId) => id !== favId
+                );
+                // const deletedHero: herosType[] = favoriteHeros.filter(
+                //     (hero) => hero.id === id
+                // );
+                // setHeros([...heros, ...deletedHero]);
+                setFavoritesId([...newFavoritesId]);
+                break;
             default:
                 break;
         }
@@ -55,23 +66,26 @@ function App() {
             (hero) => favoritesId.includes(hero.id)
         );
 
-        setFavoriteHeros((prevFavoriteHeros) => [
-            ...prevFavoriteHeros,
-            ...filteredFavHeros,
-        ]);
+        setFavoriteHeros(filteredFavHeros);
     }, [favoritesId]);
 
     useEffect(() => {
-        const newHeros: herosType[] = previousHerosRef.current.filter(
+        const newHeros: herosType[] = heros.filter(
             (hero) => !favoritesId.includes(hero.id)
         );
         setHeros([...newHeros]);
     }, [favoriteHeros]);
+    console.log("Heros=>", heros);
+    console.log("Favorites=>", favoriteHeros);
 
     return (
         <div className="w-full h-screen bg-bgStartrack text-white pt-4 px-16 pb-6">
             <LogoHeros />
-            <Liked favoriteHeros={favoriteHeros} isLoading={isLoading} />
+            <Liked
+                favoriteHeros={favoriteHeros}
+                isLoading={isLoading}
+                addFavorite={addFavorite}
+            />
             <Search />
             <General
                 heros={heros}

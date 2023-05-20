@@ -2,10 +2,12 @@ import { useEffect, useState, CSSProperties } from "react";
 import { herosType } from "../../types/herosType";
 import TitleLiked from "./components/TitleLiked";
 import { FixedSizeGrid as Grid } from "react-window";
+import HeroCard from "../../components/HeroCard";
 
 type props = {
     favoriteHeros: herosType[];
     isLoading: boolean;
+    addFavorite: (id: number, action: string) => void;
 };
 type cellType = {
     columnIndex: number;
@@ -14,9 +16,11 @@ type cellType = {
 };
 
 const Liked = (props: props) => {
-    const { favoriteHeros } = props;
+    const { favoriteHeros, addFavorite } = props;
     const [columns, setColumns] = useState(Math.trunc(window.innerWidth / 350));
-    console.log(favoriteHeros);
+    const herosArray = favoriteHeros?.map((hero: herosType) => (
+        <HeroCard hero={hero} addFavorite={addFavorite} action={"delete"} />
+    ));
 
     useEffect(() => {
         const updateWith = () => {
@@ -28,7 +32,7 @@ const Liked = (props: props) => {
         };
     }, []);
 
-    const matrixHeros = favoriteHeros.reduce(
+    const matrixHeros = herosArray.reduce(
         (rows, key, index) =>
             (index % columns == 0
                 ? rows.push([key])
