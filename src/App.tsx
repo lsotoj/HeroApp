@@ -13,8 +13,9 @@ function App() {
     const [favoritesId, setFavoritesId] = useState<number[]>([]);
     const [favoriteHeros, setFavoriteHeros] = useState<herosType[]>([]);
     const [error, setError] = useState<boolean>(false);
+    const herosRef = useRef<herosType[]>([]);
 
-    // *Get Heros from the API and memorize the function
+    // *Get Heros from the API and memorize the function and create a ref of heros
     const fetchData = useCallback(async () => {
         try {
             setIsLoading(true);
@@ -22,6 +23,7 @@ function App() {
             if (response.ok) {
                 const json = await response.json();
                 setHeros(json);
+                herosRef.current = json;
                 setIsLoading(false);
             } else {
                 setHeros([]);
@@ -34,8 +36,7 @@ function App() {
     useEffect(() => {
         fetchData();
     }, [fetchData]);
-    // * End Get Heros from the API and memorize the function
-    const previousHerosRef = useRef<herosType[]>([]);
+    // *Get Heros from the API and memorize the function and create a ref of heros
 
     const addFavorite = (id: number, action: string) => {
         switch (action) {
@@ -46,10 +47,6 @@ function App() {
                 const newFavoritesId = favoritesId.filter(
                     (favId) => id !== favId
                 );
-                // const deletedHero: herosType[] = favoriteHeros.filter(
-                //     (hero) => hero.id === id
-                // );
-                // setHeros([...heros, ...deletedHero]);
                 setFavoritesId([...newFavoritesId]);
                 break;
             default:
@@ -58,25 +55,19 @@ function App() {
     };
 
     useEffect(() => {
-        previousHerosRef.current = heros;
-    }, [heros]);
-
-    useEffect(() => {
-        const filteredFavHeros: herosType[] = previousHerosRef.current.filter(
-            (hero) => favoritesId.includes(hero.id)
+        const filteredFavHeros: herosType[] = herosRef.current.filter((hero) =>
+            favoritesId.includes(hero.id)
         );
 
         setFavoriteHeros(filteredFavHeros);
     }, [favoritesId]);
 
     useEffect(() => {
-        const newHeros: herosType[] = heros.filter(
+        const newHeros: herosType[] = herosRef.current.filter(
             (hero) => !favoritesId.includes(hero.id)
         );
         setHeros([...newHeros]);
     }, [favoriteHeros]);
-    console.log("Heros=>", heros);
-    console.log("Favorites=>", favoriteHeros);
 
     return (
         <div className="w-full h-screen bg-bgStartrack text-white pt-4 px-16 pb-6">
