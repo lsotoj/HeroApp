@@ -18,14 +18,16 @@ type cellType = {
 
 const General = (props: props) => {
     const { heros, isLoading, error, addFavorite } = props;
+    const [columns, setColumns] = useState(Math.trunc(window.innerWidth / 350));
+    const [width, setWith] = useState(window.innerWidth);
     const herosArray = heros?.map((hero: herosType) => (
         <HeroCard hero={hero} addFavorite={addFavorite} action={"add"} />
     ));
-    const [columns, setColumns] = useState(Math.trunc(window.innerWidth / 350));
 
     useEffect(() => {
         const updateWith = () => {
             setColumns(Math.trunc(window.innerWidth / 350));
+            setWith(window.innerWidth - 150);
         };
         window.addEventListener("resize", updateWith);
         return () => {
@@ -50,14 +52,15 @@ const General = (props: props) => {
     if (error) {
         return <div>Error</div>;
     }
+
     return (
         <Grid
-            columnCount={5}
+            columnCount={columns}
             columnWidth={350}
-            height={500}
+            height={350}
             rowCount={matrixHeros.length}
             rowHeight={230}
-            width={1800}
+            width={width}
         >
             {Cell}
         </Grid>

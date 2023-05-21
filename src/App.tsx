@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, ChangeEvent } from "react";
 import LogoHeros from "./components/LogoHeros";
 import Search from "./components/Search/Search";
 import General from "./screens/General";
@@ -12,6 +12,7 @@ function App() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [favoritesId, setFavoritesId] = useState<number[]>([]);
     const [favoriteHeros, setFavoriteHeros] = useState<herosType[]>([]);
+    const [searchResult, setSearchResult] = useState<herosType[]>([]);
     const [error, setError] = useState<boolean>(false);
     const herosRef = useRef<herosType[]>([]);
 
@@ -54,6 +55,20 @@ function App() {
         }
     };
 
+    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        const heroToSearch: string = event.target.value;
+        const matchSearch: herosType[] = heros.filter(
+            (hero) =>
+                hero.biography.fullName.includes(heroToSearch) ||
+                hero.name.includes(heroToSearch)
+        );
+        if (event.target.value === "") {
+            setSearchResult([]);
+            return;
+        }
+        setSearchResult(matchSearch);
+    };
+
     useEffect(() => {
         const filteredFavHeros: herosType[] = herosRef.current.filter((hero) =>
             favoritesId.includes(hero.id)
@@ -70,20 +85,29 @@ function App() {
     }, [favoriteHeros]);
 
     return (
-        <div className="w-full h-screen bg-bgStartrack text-white pt-4 px-16 pb-6">
+        <div className="w-full h-screen fixed bg-bgStartrack text-white pt-4 px-16 pb-6">
             <LogoHeros />
             <Liked
                 favoriteHeros={favoriteHeros}
                 isLoading={isLoading}
                 addFavorite={addFavorite}
             />
-            <Search />
-            <General
-                heros={heros}
-                isLoading={isLoading}
-                error={error}
-                addFavorite={addFavorite}
-            />
+            <Search handleSearch={handleSearch} />
+            {searchResult.length > 0 ? (
+                <General
+                    heros={searchResult}
+                    isLoading={isLoading}
+                    error={error}
+                    addFavorite={addFavorite}
+                />
+            ) : (
+                <General
+                    heros={heros}
+                    isLoading={isLoading}
+                    error={error}
+                    addFavorite={addFavorite}
+                />
+            )}
         </div>
     );
 }
